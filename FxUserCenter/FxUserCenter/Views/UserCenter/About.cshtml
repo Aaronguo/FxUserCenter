@@ -1,35 +1,52 @@
-﻿@{
+﻿@model FxUserCenter.AboutModel
+@{
     ViewBag.Title = "英淘网用户中心";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="sortable row-fluid">
-    <a data-rel="tooltip" title="今日有 100 个成员加入我们." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="今日有 @Model.UserTodayCount 个成员加入我们." class="well span3 top-block" href="#">
         <span class="icon32 icon-red icon-user"></span>
         <div>会员数量</div>
-        <div>507</div>
-        <span class="notification">100</span>
+        <div>
+            @Model.UserCount
+        </div>
+        <span class="notification">
+            @Model.UserTodayCount
+        </span>
     </a>
 
-    <a data-rel="tooltip" title="今日发布了 228 条信息." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="今日发布了 @Model.InfoPublishTodayCount 条信息." class="well span3 top-block" href="#">
         <span class="icon32 icon-color icon-web"></span>
         <div>发布信息</div>
-        <div>228</div>
-        <span class="notification green">228</span>
+        <div>
+            @Model.InfoPublishAllCount
+        </div>
+        <span class="notification green">
+            @Model.InfoPublishTodayCount
+        </span>
     </a>
 
-    <a data-rel="tooltip" title="今日成交数量 10." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="今日成交数量  @Model.InfoEndCount." class="well span3 top-block" href="#">
         <span class="icon32 icon-color icon-cart"></span>
         <div>今日成交</div>
-        <div>100</div>
-        <span class="notification yellow">$34</span>
+        <div>
+            @Model.InfoEndCount
+        </div>
+        <span class="notification yellow">
+            @Model.InfoEndCount
+        </span>
     </a>
 
-    <a data-rel="tooltip" title="12条 新消息." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="@Model.PrivateMessageTodayCount 条新消息." class="well span3 top-block" href="#">
         <span class="icon32 icon-color icon-envelope-closed"></span>
         <div>您的私信</div>
-        <div>25</div>
-        <span class="notification red">12</span>
+        <div>
+             @Model.PrivateMessageCount
+        </div>
+        <span class="notification red">
+             @Model.PrivateMessageTodayCount
+        </span>
     </a>
 </div>
 
@@ -46,6 +63,7 @@
         <div class="box-content">
             <h2><a href="http://yingtao.co.uk">英淘网</a>立志于提供一个物品交流平台.</h2>
             <p>我们提供了多个主题，您可以自由调节喜欢的基调~</p>
+            <p style="color:red;">对于已成交的信息请主动点击已成交，否则我们将会持续发送相关信息的邮件和站内信</p>
             <div class="clearfix"></div>
         </div>
     </div>

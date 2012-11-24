@@ -39,7 +39,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fx.Domain">
+      <HintPath>..\packages\Fx\Fx.DoMain\Fx.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="Fx.Entity">
+      <HintPath>..\packages\Fx\Fx.Entity\Fx.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Fx.Infrastructure">
+      <HintPath>..\packages\Fx\Fx.Infrastructure\Fx.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="FxCacheService">
+      <HintPath>..\packages\Fx\FxCacheService\FxCacheService.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="SimpleInjector">
+      <HintPath>..\packages\SimpleInjector.1.5.0.12199\lib\net35\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Extensions">
+      <HintPath>..\packages\SimpleInjector.Extensions.1.5.0.12238\lib\net35\SimpleInjector.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.1.5.0.12199\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc">
+      <HintPath>..\packages\SimpleInjector.MVC3.1.5.0.12199\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -91,13 +115,18 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserCenterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AboutModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -558,7 +587,9 @@
     <Content Include="UserCenter\js\jquery.raty.min.js" />
     <Content Include="UserCenter\js\jquery.uniform.min.js" />
     <Content Include="UserCenter\js\jquery.uploadify-3.1.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -573,7 +604,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\import\Droid.woff" />
@@ -631,6 +661,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="UserCenter\css\import\Ubuntu.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\AppSetting.config" />
+    <Content Include="Config\DataBase.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Config\JobException.config" />
+    <Content Include="Config\JobLog.config" />
+    <Content Include="Config\Resizer.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\Machine.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
