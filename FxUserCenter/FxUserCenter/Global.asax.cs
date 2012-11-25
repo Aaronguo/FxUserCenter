@@ -29,6 +29,26 @@ namespace FxUserCenter
                 new { controller = "UserCenter", action = "About", id = UrlParameter.Optional } // Parameter defaults
             );
 
+            routes.MapRoute(
+                "Admin",
+                "{controller}/{action}/{page}",
+                new object[] { 
+                 new { controller = "Admin", action = "GoodsBuy", page = UrlParameter.Optional }, 
+                 new { controller = "Admin", action = "GoodsTransfer", page = UrlParameter.Optional }, 
+                 new { controller = "Admin", action = "CarBuy", page = UrlParameter.Optional }, 
+                 new { controller = "Admin", action = "CarTransfer", page = UrlParameter.Optional }, 
+                 new { controller = "Admin", action = "HouseBuy", page = UrlParameter.Optional }, 
+                 new { controller = "Admin", action = "HouseTransfer", page = UrlParameter.Optional }, 
+                 new { controller = "Admin", action = "CarTransferTopShow", page = UrlParameter.Optional },
+                 new { controller = "Admin", action = "CarBuyTopShow", page = UrlParameter.Optional },
+                 new { controller = "Admin", action = "HouseTransferTopShow", page = UrlParameter.Optional },
+                 new { controller = "Admin", action = "HouseBuyTopShow", page = UrlParameter.Optional },
+                 new { controller = "Admin", action = "GoodsTransferTopShow", page = UrlParameter.Optional },
+                 new { controller = "Admin", action = "GoodsBuyTopShow", page = UrlParameter.Optional },
+                 new { controller = "Admin", action = "CancleTopShow", page = UrlParameter.Optional },
+                 
+                }
+            );
         }
 
         protected void Application_Start()

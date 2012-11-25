@@ -1,8 +1,20 @@
-﻿@model FxUserCenter.AboutModel
+﻿@model FxUserCenter.Models.AboutModel
 @{
     ViewBag.Title = "英淘网用户中心";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">用户中心</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">关于英淘</a>
+        </li>
+    </ul>
+</div>
 
 <div class="sortable row-fluid">
     <a data-rel="tooltip" title="今日有 @Model.UserTodayCount 个成员加入我们." class="well span3 top-block" href="#">

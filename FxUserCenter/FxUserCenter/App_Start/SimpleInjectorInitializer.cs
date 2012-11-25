@@ -36,6 +36,20 @@ namespace FxUserCenter.App_Start
             // folder.
             //#error Register your services here (remove this line).
             InitSiteContainer(container);
+
+            InitUserCenterContainer(container);
+
+            InitTaskContainer(container);
+        }
+
+        private static void InitUserCenterContainer(Container container)
+        {
+            container.Register<Fx.Domain.FxCar.IService.UserCenter.ICarUserCenter, Fx.Domain.FxCar.UserCenterImp.CarUserCenter>();
+            container.Register<Fx.Domain.FxHouse.IService.UserCenter.IHouseUserCenter, Fx.Domain.FxHouse.UserCenterImp.HouseUserCenter>();
+            container.Register<Fx.Domain.FxGoods.IService.UserCenter.IGoodsUserCenter, Fx.Domain.FxGoods.UserCenterImp.GoodsUserCenter>();
+
+
+            container.Register<Fx.Domain.FxAggregate.IService.ITopShow, Fx.Domain.FxAggregate.TopShowService>();
         }       
 
         private static void InitSiteContainer(Container container)
@@ -67,6 +81,25 @@ namespace FxUserCenter.App_Start
             //»º´æ·þÎñ
             container.RegisterSingle<Fx.Infrastructure.Caching.ICacheManager, Fx.Infrastructure.Caching.CacheManager>();
             container.RegisterSingle<FxCacheService.FxSite.GlobalCache>();
+        }
+
+        private static void InitTaskContainer(Container container)
+        {
+
+            //container.RegisterSingle<Fx.Infrastructure.Caching.ICacheManager, Fx.Infrastructure.Caching.CacheManager>();
+            
+
+            //FxTaskFxCar
+            container.Register<Fx.Domain.FxCar.IService.ICarBuyJob, Fx.Domain.FxCar.CarBuyJobService>();
+            container.Register<Fx.Domain.FxCar.IService.ICarTransferJob, Fx.Domain.FxCar.CarTransferJobService>();
+
+            //FxTaskFxGoods
+            container.Register<Fx.Domain.FxGoods.IService.IGoodsBuyJob, Fx.Domain.FxGoods.GoodsBuyJobService>();
+            container.Register<Fx.Domain.FxGoods.IService.IGoodsTransferJob, Fx.Domain.FxGoods.GoodsTransferJobService>();
+
+            //FxTaskFxHouse
+            container.Register<Fx.Domain.FxHouse.IService.IHouseBuyJob, Fx.Domain.FxHouse.HouseBuyJobService>();
+            container.Register<Fx.Domain.FxHouse.IService.IHouseTransferJob, Fx.Domain.FxHouse.HouseTransferJobService>();
         }
     }
 }

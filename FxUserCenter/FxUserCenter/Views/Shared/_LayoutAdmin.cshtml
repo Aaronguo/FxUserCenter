@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="用户中心">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+
+    <link id="bs-css" href="@Url.Content("~/css/bootstrap-cerulean.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/bootstrap-responsive.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/charisma-app.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/jquery-ui-1.8.21.custom.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/fullcalendar.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/fullcalendar.print.css")" rel="stylesheet" media="print">
+    <link href="@Url.Content("~/css/chosen.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/uniform.default.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/colorbox.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/jquery.cleditor.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/jquery.noty.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/noty_theme_default.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/elfinder.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/elfinder.theme.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/jquery.iphone.toggle.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/opa-icons.css")" rel="stylesheet">
+    <link href="@Url.Content("~/css/uploadify.css")" rel="stylesheet">
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+	  <script src="@Url.Content("~/js/html5.js")"></script>
+	<![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="@Url.Content("~/img/favicon.ico")">
+</head>
+<body style="padding-bottom: 40px">
+    @Html.Partial("_Topbar")
+
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <!-- left menu starts -->
+            <div class="span2 main-menu-span">
+                <div class="well nav-collapse sidebar-nav" style="padding: 9px 0">
+                    <ul class="nav nav-tabs nav-stacked main-menu">
+                        <li class="nav-header hidden-tablet">控制面板</li>
+                        <li><a class="ajax-link" href="#"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">你好, @User.Identity.Name</span></a></li>
+                        <li><a class="ajax-link" href="/Admin/About"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">关于英淘</span></a></li>
+                        <li class="nav-header hidden-tablet">二手交易</li>
+                        <li><a class="ajax-link" href="/Admin/GoodsBuy"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">二手求购</span></a></li>
+                        <li><a class="ajax-link" href="/Admin/GoodsTransfer"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">二手转让</span></a></li>
+                        <li class="nav-header hidden-tablet">车辆交易</li>
+                        <li><a class="ajax-link" href="/Admin/CarBuy"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">车辆求购</span></a></li>
+                        <li><a class="ajax-link" href="/Admin/CarTransfer"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">车辆转让</span></a></li>
+                        <li class="nav-header hidden-tablet">房屋交易</li>
+                        <li><a class="ajax-link" href="/Admin/HouseBuy"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">房屋求购</span></a></li>
+                        <li><a class="ajax-link" href="/Admin/HouseTransfer"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">房屋转让</span></a></li>
+                        <li class="nav-header hidden-tablet">聚合信息</li>
+                        <li><a class="ajax-link" href="/Admin/TopShow"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">置顶信息</span></a></li>
+                        <li class="nav-header hidden-tablet">我的设置</li>
+                        <li><a class="ajax-link" href="/Admin/ChangePassword"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">修改密码</span></a></li>
+                        @*
+                        <li><a class="ajax-link" href="/Admin/Favote"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">我的收藏</span></a></li>
+                        <li><a class="ajax-link" href="/Admin/PrivateMessage"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">我的私信</span></a></li>
+                        *@
+                        <li><a class="ajax-link" href="/Admin/LogOff"><i class="icon icon-color icon-profile"></i><span class="hidden-tablet">注销</span></a></li>
+                    </ul>
+                    <!--                    <label id="for-is-ajax" class="hidden-tablet" for="is-ajax">
+                        <input id="is-ajax" type="checkbox">
+                        Ajax on menu</label>-->
+                </div>
+                <!--/.well -->
+            </div>
+            <!--/span-->
+            <!-- left menu ends -->
+
+            <noscript>
+                <div class="alert alert-block span10">
+                    <h4 class="alert-heading">警告!</h4>
+                    <p><a href="http://zh.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> 被您禁用了~~请开启 谢谢.</p>
+                </div>
+            </noscript>
+
+            <div id="content" class="span10">
+                @RenderBody()
+            </div>
+        </div>
+
+
+
+        <hr>
+
+        <div class="modal hide fade" id="myModal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>设置</h3>
+            </div>
+            <div class="modal-body">
+                <p>确认要保存吗.....？</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">关 闭</a>
+                <a href="#" class="btn btn-primary">保 存</a>
+            </div>
+        </div>
+
+        <footer>
+            <p class="pull-left">&copy; <a href="http://yingtao.co.uk" target="_blank">yingtao.co.uk</a> 2012</p>
+            <p class="pull-right">Powered by: <a href="http://blog.chenzhuojie.com">fengxing</a> Use  Charisma.Our team thanks author.</p>
+        </footer>
+    </div>
+    @Html.Partial("_Footer")
+
+
+    <!-- external javascript
+	================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <!-- jQuery -->
+    <script src="@Url.Content("~/js/jquery-1.7.2.min.js")"></script>
+    <!-- jQuery UI -->
+    <script src="@Url.Content("~/js/jquery-ui-1.8.21.custom.min.js")"></script>
+
+    <script src="@Url.Content("~/js/bootstrap.min.js")"></script>
+    @*    <!-- transition / effect library -->
+    <script src="@Url.Content("js/bootstrap-transition.js"></script>
+    <!-- alert enhancer library -->
+    <script src="@Url.Content("js/bootstrap-alert.js"></script>
+    <!-- modal / dialog library -->
+    <script src="@Url.Content("js/bootstrap-modal.js"></script>
+    <!-- custom dropdown library -->
+    <script src="@Url.Content("js/bootstrap-dropdown.js"></script>
+    <!-- scrolspy library -->
+    <script src="@Url.Content("js/bootstrap-scrollspy.js"></script>
+    <!-- library for creating tabs -->
+    <script src="@Url.Content("js/bootstrap-tab.js"></script>
+    <!-- library for advanced tooltip -->
+    <script src="@Url.Content("js/bootstrap-tooltip.js"></script>
+    <!-- popover effect library -->
+    <script src="@Url.Content("js/bootstrap-popover.js"></script>
+    <!-- button enhancer library -->
+    <script src="@Url.Content("js/bootstrap-button.js"></script>
+    <!-- accordion library (optional, not used in demo) -->
+    <script src="@Url.Content("js/bootstrap-collapse.js"></script>
+    <!-- carousel slideshow library (optional, not used in demo) -->
+    <script src="@Url.Content("js/bootstrap-carousel.js"></script>
+    <!-- autocomplete library -->
+    <script src="@Url.Content("js/bootstrap-typeahead.js"></script>
+    <!-- tour library -->
+    <script src="@Url.Content("js/bootstrap-tour.js"></script>*@
+
+
+    <!-- library for cookie management -->
+    <script src="@Url.Content("~/js/jquery.cookie.js")"></script>
+    <!-- calander plugin -->
+    <script src="@Url.Content("~/js/fullcalendar.min.js")"></script>
+    <!-- data table plugin -->
+    <script src="@Url.Content("~/js/jquery.dataTables.min.js")"></script>
+
+    <!-- chart libraries start -->
+    <script src="@Url.Content("~/js/excanvas.js")"></script>
+    <script src="@Url.Content("~/js/jquery.flot.min.js")"></script>
+    <script src="@Url.Content("~/js/jquery.flot.pie.min.js")"></script>
+    <script src="@Url.Content("~/js/jquery.flot.stack.js")"></script>
+    <script src="@Url.Content("~/js/jquery.flot.resize.min.js")"></script>
+    <!-- chart libraries end -->
+
+    <!-- select or dropdown enhancer -->
+    <script src="@Url.Content("~/js/jquery.chosen.min.js")"></script>
+    <!-- checkbox, radio, and file input styler -->
+    <script src="@Url.Content("~/js/jquery.uniform.min.js")"></script>
+    <!-- plugin for gallery image view -->
+    <script src="@Url.Content("~/js/jquery.colorbox.min.js")"></script>
+    <!-- rich text editor library -->
+    <script src="@Url.Content("~/js/jquery.cleditor.min.js")"></script>
+    <!-- notification plugin -->
+    <script src="@Url.Content("~/js/jquery.noty.js")"></script>
+    <!-- file manager library -->
+    <script src="@Url.Content("~/js/jquery.elfinder.min.js")"></script>
+    <!-- star rating plugin -->
+    <script src="@Url.Content("~/js/jquery.raty.min.js")"></script>
+    <!-- for iOS style toggle switch -->
+    <script src="@Url.Content("~/js/jquery.iphone.toggle.js")"></script>
+    <!-- autogrowing textarea plugin -->
+    <script src="@Url.Content("~/js/jquery.autogrow-textarea.js")"></script>
+    <!-- multiple file upload plugin -->
+    <script src="@Url.Content("~/js/jquery.uploadify-3.1.min.js")"></script>
+    <!-- history.js for cross-browser state change on ajax -->
+    <script src="@Url.Content("~/js/jquery.history.js")"></script>
+    <!-- application script for Charisma demo -->
+    <script src="@Url.Content("~/js/charisma.js")"></script>
+</body>
+</html>
