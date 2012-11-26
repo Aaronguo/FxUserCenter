@@ -61,7 +61,8 @@ namespace FxUserCenter.Controllers
 #if DEBUG
 
 #else
-            if (!User.Identity.Name.Equals("117822597@163.com"))
+            if (User == null || User.Identity == null || 
+                User.Identity.Name == null || !User.Identity.Name.Equals("117822597@163.com"))
             {
                 RedirectPermanent("http://yingtao.co.uk");
             }
@@ -437,7 +438,7 @@ namespace FxUserCenter.Controllers
                     else if (entity.ChannelCatagroy == (int)ChannelCatagroy.FxHouseTrasnfer)
                     {
                         houseTransferJob.Publish(entity.InfoId);
-                    } 
+                    }
                     #endregion
                     //删除置顶信息
                     topShow.TopShowCancel(new Fx.Entity.FxAggregate.TopShow()

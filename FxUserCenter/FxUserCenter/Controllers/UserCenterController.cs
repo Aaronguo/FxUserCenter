@@ -36,7 +36,8 @@ namespace FxUserCenter.Controllers
 
         public ActionResult About()
         {
-            if (User.Identity.Name.Equals("117822597@163.com"))
+            if (User != null || User.Identity != null ||
+                User.Identity.Name != null || User.Identity.Name.Equals("117822597@163.com"))
             {
                 RedirectPermanent("~/Admin/About");
             }
