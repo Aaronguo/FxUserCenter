@@ -50,13 +50,13 @@ namespace FxUserCenter.Controllers
             IBuyCar buyCar,
             ITransferCar transferCar,
             IBuyHouse buyHouse,
-            ITransferHouse transferHouse,
-            ICarBuyJob carBuyJob,
-            ICarTransferJob carTransferJob,
-            IHouseBuyJob houseBuyJob,
-            IHouseTransferJob houseTransferJob,
-            IGoodsBuyJob goodsBuyJob,
-            IGoodsTransferJob goodsTransferJob)
+            ITransferHouse transferHouse)
+            //ICarBuyJob carBuyJob,
+            //ICarTransferJob carTransferJob,
+            //IHouseBuyJob houseBuyJob,
+            //IHouseTransferJob houseTransferJob,
+            //IGoodsBuyJob goodsBuyJob,
+            //IGoodsTransferJob goodsTransferJob)
         {
 #if DEBUG
 
@@ -78,12 +78,12 @@ namespace FxUserCenter.Controllers
             this.transferCar = transferCar;
             this.buyHouse = buyHouse;
             this.transferHouse = transferHouse;
-            this.carBuyJob = carBuyJob;
-            this.carTransferJob = carTransferJob;
-            this.houseBuyJob = houseBuyJob;
-            this.houseTransferJob = houseTransferJob;
-            this.goodsBuyJob = goodsBuyJob;
-            this.goodsTransferJob = goodsTransferJob;
+            //this.carBuyJob = carBuyJob;
+            //this.carTransferJob = carTransferJob;
+            //this.houseBuyJob = houseBuyJob;
+            //this.houseTransferJob = houseTransferJob;
+            //this.goodsBuyJob = goodsBuyJob;
+            //this.goodsTransferJob = goodsTransferJob;
         }
         #endregion
 

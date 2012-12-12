@@ -16,6 +16,7 @@ namespace FxUserCenter
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new FxUserCenter.Framework.ElmahHandledErrorLoggerFilter());
             filters.Add(new HandleErrorAttribute());
         }
 

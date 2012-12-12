@@ -47,15 +47,15 @@
                                 </span>
                             </td>
                             <td class="center">
-                                <a class="btn btn-success" href="#">
+                                <a class="btn btn-success" href="@FxUserCenter.AppSettings.GoodsTransferLink(item.GoodsTransferInfoId)">
                                     <i class="icon-zoom-in icon-white"></i>
                                     查看                                            
                                 </a>
-                                <a class="btn btn-info" href="#">
+                                <a class="btn btn-info" href="/UserCenter/GoodsTransferEnd?id=@item.GoodsTransferInfoId">
                                     <i class="icon-edit icon-white"></i>
                                     成交                                            
                                 </a>
-                                <a class="btn btn-danger" href="#">
+                                <a class="btn btn-danger" href="/UserCenter/GoodsTransferDelete?id=@item.GoodsTransferInfoId">
                                     <i class="icon-trash icon-white"></i>
                                     删除
                                 </a>

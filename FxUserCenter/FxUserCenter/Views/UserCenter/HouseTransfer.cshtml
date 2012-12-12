@@ -47,15 +47,15 @@
                                 </span>
                             </td>
                             <td class="center">
-                                <a class="btn btn-success" href="#">
+                                <a class="btn btn-success" href="@FxUserCenter.AppSettings.HouseTransferLink(item.HouseTransferInfoId)">
                                     <i class="icon-zoom-in icon-white"></i>
                                     查看                                            
                                 </a>
-                                <a class="btn btn-info" href="#">
+                                <a class="btn btn-info" href="/UserCenter/HouseTransferEnd?id=@item.HouseTransferInfoId">
                                     <i class="icon-edit icon-white"></i>
                                     成交                                            
                                 </a>
-                                <a class="btn btn-danger" href="#">
+                                <a class="btn btn-danger" href="/UserCenter/HouseTransferDelete?id=@item.HouseTransferInfoId">
                                     <i class="icon-trash icon-white"></i>
                                     删除
                                 </a>

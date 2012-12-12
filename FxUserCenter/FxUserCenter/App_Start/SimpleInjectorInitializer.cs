@@ -4,7 +4,10 @@ namespace FxUserCenter.App_Start
 {
     using System.Reflection;
     using System.Web.Mvc;
-
+    using Fx.Domain.Base.IService;
+    using Fx.Entity.FxCar;
+    using Fx.Entity.FxGoods;
+    using Fx.Entity.FxHouse;
     using SimpleInjector;
     using SimpleInjector.Integration.Web.Mvc;
 
@@ -29,28 +32,86 @@ namespace FxUserCenter.App_Start
 
         private static void InitializeContainer(Container container)
         {
-            // Please note that if you updated the SimpleInjector.MVC3 package from a previous version, this
-            // SimpleInjectorInitializer class replaces the previous SimpleInjectorMVC3 class. You should
-            // move the registrations from the old SimpleInjectorMVC3.InitializeContainer to this method,
-            // and remove the SimpleInjectorMVC3 and SimpleInjectorMVC3Extensions class from the App_Start
-            // folder.
-            //#error Register your services here (remove this line).
             InitSiteContainer(container);
-
+            InitSearchContainer(container);
+            InitCacheContainer(container);
+            //InitJobContainer(container);
+            InitAggregateContainer(container);
             InitUserCenterContainer(container);
-
-            InitTaskContainer(container);
         }
 
-        private static void InitUserCenterContainer(Container container)
+        private static void InitAggregateContainer(Container container)
         {
-            container.Register<Fx.Domain.FxCar.IService.UserCenter.ICarUserCenter, Fx.Domain.FxCar.UserCenterImp.CarUserCenter>();
-            container.Register<Fx.Domain.FxHouse.IService.UserCenter.IHouseUserCenter, Fx.Domain.FxHouse.UserCenterImp.HouseUserCenter>();
-            container.Register<Fx.Domain.FxGoods.IService.UserCenter.IGoodsUserCenter, Fx.Domain.FxGoods.UserCenterImp.GoodsUserCenter>();
-
-
+            container.Register<Fx.Domain.FxAggregate.IService.IDbAll, Fx.Domain.FxAggregate.DbAllService>();
             container.Register<Fx.Domain.FxAggregate.IService.ITopShow, Fx.Domain.FxAggregate.TopShowService>();
-        }       
+            container.Register<Fx.Domain.FxAggregate.IService.IHomeTopShow, Fx.Domain.FxAggregate.TopShowService>();
+            container.Register<Fx.Domain.FxAggregate.IService.IFavorite, Fx.Domain.FxAggregate.FavoriteService>();
+            container.Register<Fx.Domain.FxAggregate.IService.IAggregateInfo, Fx.Domain.FxAggregate.AggregateInfoService>();
+            container.Register<Fx.Domain.FxAggregate.IService.IPrivateMessage, Fx.Domain.FxAggregate.PrivateMessageService>();
+
+        }
+
+        private static void InitCacheContainer(Container container)
+        {
+            //缓存服务
+            container.RegisterSingle<Fx.Infrastructure.Caching.ICacheManager, Fx.Infrastructure.Caching.CacheManager>();
+            container.RegisterSingle<FxCacheService.FxGoods.GoodsCache>();
+            container.RegisterSingle<FxCacheService.FxHouse.HouseCache>();
+            container.RegisterSingle<FxCacheService.FxCar.CarCache>();
+            container.RegisterSingle<FxCacheService.FxSite.SiteCache>();
+            //缓存查询服务  为什么不使用接口注册？ISiteSearch<CarBuyInfo> 保持对外一致性 用于缓存
+            container.Register<Fx.Domain.FxCar.Search.CarBuySearchService>();
+            container.Register<Fx.Domain.FxCar.Search.CarTransferSearchService>();
+            container.Register<Fx.Domain.FxGoods.Search.GoodsBuySearchService>();
+            container.Register<Fx.Domain.FxGoods.Search.GoodsTransferSearchService>();
+            container.Register<Fx.Domain.FxHouse.Search.HouseBuySearchService>();
+            container.Register<Fx.Domain.FxHouse.Search.HouseTransferSearchService>();
+        }
+
+
+        private static void InitJobContainer(Container container)
+        {
+            //FxTaskFxCar
+            container.Register<Fx.Domain.FxCar.IService.ICarBuyJob, Fx.Domain.FxCar.CarBuyJobService>();
+            container.Register<Fx.Domain.FxCar.IService.ICarTransferJob, Fx.Domain.FxCar.CarTransferJobService>();
+
+
+            //FxTaskFxGoods
+            container.Register<Fx.Domain.FxGoods.IService.IGoodsBuyJob, Fx.Domain.FxGoods.GoodsBuyJobService>();
+            container.Register<Fx.Domain.FxGoods.IService.IGoodsTransferJob, Fx.Domain.FxGoods.GoodsTransferJobService>();
+
+            //FxTaskFxHouse
+            container.Register<Fx.Domain.FxHouse.IService.IHouseBuyJob, Fx.Domain.FxHouse.HouseBuyJobService>();
+            container.Register<Fx.Domain.FxHouse.IService.IHouseTransferJob, Fx.Domain.FxHouse.HouseTransferJobService>();
+        }
+
+        private static void InitSearchContainer(Container container)
+        {
+            //FxGoodsSearch
+            container.Register<IHomeSearch<Fx.Entity.FxGoods.GoodsTransferInfo>, Fx.Domain.FxGoods.Search.GoodsTransferSearchService>();
+            container.Register<ISiteSearch<GoodsTransferInfo>, Fx.Domain.FxGoods.Search.GoodsTransferSearchService>();
+            container.Register<ISiteSearch<GoodsBuyInfo>, Fx.Domain.FxGoods.Search.GoodsBuySearchService>();
+            //GoodsConditionSearch
+            container.Register<IGoodsSearch<GoodsTransferInfo>, Fx.Domain.FxGoods.Search.GoodsTransferSearchService>();
+            container.Register<IGoodsSearch<GoodsBuyInfo>, Fx.Domain.FxGoods.Search.GoodsBuySearchService>();
+
+            //FxCarSearch
+            container.Register<IHomeSearch<Fx.Entity.FxCar.CarTransferInfo>, Fx.Domain.FxCar.Search.CarTransferSearchService>();
+            container.Register<ISiteSearch<CarTransferInfo>, Fx.Domain.FxCar.Search.CarTransferSearchService>();
+            container.Register<ISiteSearch<CarBuyInfo>, Fx.Domain.FxCar.Search.CarBuySearchService>();
+            //CarConditionSearch
+            container.Register<ICarSearch<CarTransferInfo>, Fx.Domain.FxCar.Search.CarTransferSearchService>();
+            container.Register<ICarSearch<CarBuyInfo>, Fx.Domain.FxCar.Search.CarBuySearchService>();
+
+            //FxHouseSearch
+            container.Register<IHomeSearch<Fx.Entity.FxHouse.HouseTransferInfo>, Fx.Domain.FxHouse.Search.HouseTransferSearchService>();
+            container.Register<ISiteSearch<HouseTransferInfo>, Fx.Domain.FxHouse.Search.HouseTransferSearchService>();
+            container.Register<ISiteSearch<HouseBuyInfo>, Fx.Domain.FxHouse.Search.HouseBuySearchService>();
+            //HouseConditionSearch
+            container.Register<IHouseSearch<HouseTransferInfo>, Fx.Domain.FxHouse.Search.HouseTransferSearchService>();
+            container.Register<IHouseSearch<HouseBuyInfo>, Fx.Domain.FxHouse.Search.HouseBuySearchService>();
+        }
+
 
         private static void InitSiteContainer(Container container)
         {
@@ -58,6 +119,7 @@ namespace FxUserCenter.App_Start
             container.Register<Fx.Domain.FxSite.IService.IChannelService, Fx.Domain.FxSite.ChannelService>();
             container.Register<Fx.Domain.FxSite.IService.IPageAjax, Fx.Domain.FxSite.PublishAjaxService>();
 
+            //ForSite
             container.Register<Fx.Domain.FxSite.IService.IGoods, Fx.Domain.FxSite.GoodsService>();
             container.Register<Fx.Domain.FxSite.IService.ICar, Fx.Domain.FxSite.CarService>();
             container.Register<Fx.Domain.FxSite.IService.IHouse, Fx.Domain.FxSite.HouseService>();
@@ -74,32 +136,18 @@ namespace FxUserCenter.App_Start
             container.Register<Fx.Domain.FxHouse.IService.ITransferHouse, Fx.Domain.FxHouse.FxTransferHouseService>();
             container.Register<Fx.Domain.FxHouse.IService.IBuyHouse, Fx.Domain.FxHouse.FxBuyHouseService>();
 
-            //FxAggregate 
-            container.Register<Fx.Domain.FxAggregate.IService.IDbAll, Fx.Domain.FxAggregate.DbAllService>();
-            container.Register<Fx.Domain.FxAggregate.IService.IFavorite, Fx.Domain.FxAggregate.FavoriteService>();
-
-            //缓存服务
-            container.RegisterSingle<Fx.Infrastructure.Caching.ICacheManager, Fx.Infrastructure.Caching.CacheManager>();
-            container.RegisterSingle<FxCacheService.FxSite.GlobalCache>();
+            //ListGet
+            container.Register<Fx.Domain.FxCar.CarListService>();
+            container.Register<Fx.Domain.FxGoods.GoodsListService>();
+            container.Register<Fx.Domain.FxHouse.HouseListService>();
         }
 
-        private static void InitTaskContainer(Container container)
+
+        private static void InitUserCenterContainer(Container container)
         {
-
-            //container.RegisterSingle<Fx.Infrastructure.Caching.ICacheManager, Fx.Infrastructure.Caching.CacheManager>();
-            
-
-            //FxTaskFxCar
-            container.Register<Fx.Domain.FxCar.IService.ICarBuyJob, Fx.Domain.FxCar.CarBuyJobService>();
-            container.Register<Fx.Domain.FxCar.IService.ICarTransferJob, Fx.Domain.FxCar.CarTransferJobService>();
-
-            //FxTaskFxGoods
-            container.Register<Fx.Domain.FxGoods.IService.IGoodsBuyJob, Fx.Domain.FxGoods.GoodsBuyJobService>();
-            container.Register<Fx.Domain.FxGoods.IService.IGoodsTransferJob, Fx.Domain.FxGoods.GoodsTransferJobService>();
-
-            //FxTaskFxHouse
-            container.Register<Fx.Domain.FxHouse.IService.IHouseBuyJob, Fx.Domain.FxHouse.HouseBuyJobService>();
-            container.Register<Fx.Domain.FxHouse.IService.IHouseTransferJob, Fx.Domain.FxHouse.HouseTransferJobService>();
-        }
+            container.Register<Fx.Domain.FxCar.IService.UserCenter.ICarUserCenter, Fx.Domain.FxCar.UserCenterImp.CarUserCenter>();
+            container.Register<Fx.Domain.FxHouse.IService.UserCenter.IHouseUserCenter, Fx.Domain.FxHouse.UserCenterImp.HouseUserCenter>();
+            container.Register<Fx.Domain.FxGoods.IService.UserCenter.IGoodsUserCenter, Fx.Domain.FxGoods.UserCenterImp.GoodsUserCenter>();
+        }       
     }
 }

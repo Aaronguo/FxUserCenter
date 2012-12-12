@@ -36,7 +36,7 @@ namespace FxUserCenter
         }
 
 
-        /**/
+
         /// <summary>
         /// 获取枚举类子项描述信息
         /// </summary>
@@ -60,9 +60,8 @@ namespace FxUserCenter
             }
             else
             {
-                return "描述未定义";
+                return "UnKonw";
             }
-
         }
     }
 }
