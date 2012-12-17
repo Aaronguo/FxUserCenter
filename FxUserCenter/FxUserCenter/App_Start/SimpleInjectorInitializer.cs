@@ -35,7 +35,7 @@ namespace FxUserCenter.App_Start
             InitSiteContainer(container);
             InitSearchContainer(container);
             InitCacheContainer(container);
-            //InitJobContainer(container);
+            InitJobContainer(container);
             InitAggregateContainer(container);
             InitUserCenterContainer(container);
         }

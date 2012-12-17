@@ -25,3 +25,4 @@ E:\Program Files\GitHubWorkspace\net\FxUserCenter\FxUserCenter\FxUserCenter\FxUs
 E:\Program Files\GitHubWorkspace\net\FxUserCenter\FxUserCenter\FxUserCenter\FxUserCenter\bin\EntityFramework.xml
 E:\Program Files\GitHubWorkspace\net\FxUserCenter\FxUserCenter\FxUserCenter\FxUserCenter\obj\Debug\FxUserCenter.dll
 E:\Program Files\GitHubWorkspace\net\FxUserCenter\FxUserCenter\FxUserCenter\FxUserCenter\obj\Debug\FxUserCenter.pdb
+E:\Program Files\GitHubWorkspace\net\FxUserCenter\FxUserCenter\FxUserCenter\FxUserCenter\obj\Debug\FxUserCenter.csprojResolveAssemblyReference.cache

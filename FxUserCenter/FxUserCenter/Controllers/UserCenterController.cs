@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Fx.Domain.FxAggregate.IService;
 using Fx.Domain.FxCar.IService;
 using Fx.Domain.FxCar.IService.UserCenter;
 using Fx.Domain.FxGoods.IService;
@@ -24,23 +25,29 @@ namespace FxUserCenter.Controllers
         protected ICarUserCenter carUserCenter;
         protected IGoodsUserCenter goodsUserCenter;
         protected IHouseUserCenter houseUserCenter;
+        protected IPrivateMessage privateMessage;
+        protected IFavorite favorite;
         public UserCenterController(GlobalCache gloablCache,
             ICarUserCenter carUserCenter,
             IGoodsUserCenter goodsUserCenter,
-            IHouseUserCenter houseUserCenter)
+            IHouseUserCenter houseUserCenter,
+            IPrivateMessage privateMessage,
+            IFavorite favorite)
         {
             this.gloablCache = gloablCache;
             this.carUserCenter = carUserCenter;
             this.houseUserCenter = houseUserCenter;
             this.goodsUserCenter = goodsUserCenter;
+            this.privateMessage = privateMessage;
+            this.favorite = favorite;
         }
         //
         // GET: /UserCenter/
 
         public ActionResult About()
         {
-            if (User != null || User.Identity != null ||
-                User.Identity.Name != null || User.Identity.Name.Equals("117822597@163.com"))
+            if (User != null && User.Identity != null &&
+                User.Identity.Name != null && User.Identity.Name.Equals("117822597@163.com"))
             {
                 return Redirect("~/Admin/About");
             }
@@ -57,43 +64,116 @@ namespace FxUserCenter.Controllers
             return View(about);
         }
 
+        public ActionResult Favorite()
+        {
+#if DEBUG
+            var list = favorite.GetFavorite("117822597@163.com");
+#else
+            var list = privateMessage.GetByUser(User.Identity.Name);
+#endif
+            return View(list);
+        }
+
+        public ActionResult FavoriteDelete(int id)
+        {
+            var info = favorite.GetById(id);
+            if (info != null && info.UserAccount == User.Identity.Name)
+            {
+                favorite.DeleteFavorite(new Fx.Entity.FxAggregate.Favorite()
+                {
+                    FavoriteId = id
+                });
+            }
+            return RedirectToAction("Favorite");
+        }
+
+
+
+        public ActionResult PrivateMessage()
+        {
+#if DEBUG
+            var infos = privateMessage.GetByUser("117822597@163.com");
+#else
+            var infos = privateMessage.GetByUser(User.Identity.Name);
+#endif
+            return View(infos);
+        }
+
+        public ActionResult PrivateMessageDelete(int id)
+        {
+            var info = privateMessage.GetById(id);
+            if (info != null && info.UserAccount == User.Identity.Name)
+            {
+                privateMessage.RemovePrivateMessage(new Fx.Entity.FxAggregate.PrivateMessage()
+                {
+                    PrivateMessageId = id
+                });
+            }
+            return RedirectToAction("PrivateMessage");
+        }
+
+
 
 
         #region 帖子信息获取
         public ActionResult GoodsBuy()
         {
+#if DEBUG
             return View(goodsUserCenter.GetBuys(User.Identity.Name));
+#else
+            return View(goodsUserCenter.GetBuys(User.Identity.Name));
+#endif
         }
 
 
         public ActionResult GoodsTransfer()
         {
-            return View(goodsUserCenter.GetTransfers(User.Identity.Name));
+#if DEBUG
+            return View(goodsUserCenter.GetTransfers("117822597@163.com"));
+#else
+             return View(goodsUserCenter.GetTransfers(User.Identity.Name));
+#endif
         }
 
 
         public ActionResult CarBuy()
         {
-            return View(carUserCenter.GetBuys(User.Identity.Name));
+#if DEBUG
+            return View(carUserCenter.GetBuys("117822597@163.com"));
+#else
+             return View(carUserCenter.GetBuys(User.Identity.Name));
+#endif
         }
 
 
         public ActionResult CarTransfer()
         {
-            return View(carUserCenter.GetTransfers(User.Identity.Name));
+#if DEBUG
+            return View(carUserCenter.GetTransfers("117822597@163.com"));
+#else
+             return View(carUserCenter.GetTransfers(User.Identity.Name));
+#endif
         }
 
 
         public ActionResult HouseBuy()
         {
-            return View(houseUserCenter.GetBuys(User.Identity.Name));
+#if DEBUG
+            return View(houseUserCenter.GetBuys("117822597@163.com"));
+#else
+         return View(houseUserCenter.GetBuys(User.Identity.Name));     
+#endif
         }
 
 
 
         public ActionResult HouseTransfer()
         {
+#if DEBUG
+            return View(houseUserCenter.GetTransfers("117822597@163.com"));
+#else
             return View(houseUserCenter.GetTransfers(User.Identity.Name));
+#endif
         }
         #endregion
 
@@ -152,9 +232,9 @@ namespace FxUserCenter.Controllers
             {
                 ICarBuyJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarBuyJob>();
                 car.End(id);
-            }
-            return View("CarBuy");
 
+            }
+            return RedirectToAction("CarBuy");
         }
 
 
@@ -167,7 +247,7 @@ namespace FxUserCenter.Controllers
                 ICarTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarTransferJob>();
                 car.End(id);
             }
-            return View("CarTransfer");
+            return RedirectToAction("CarTransfer");
         }
 
 
@@ -181,7 +261,7 @@ namespace FxUserCenter.Controllers
                 IGoodsBuyJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsBuyJob>();
                 goods.End(id);
             }
-            return View("GoodsBuy");
+            return RedirectToAction("GoodsBuy");
         }
 
 
@@ -194,7 +274,7 @@ namespace FxUserCenter.Controllers
                 IGoodsTransferJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsTransferJob>();
                 goods.End(id);
             }
-            return View("GoodsTransfer");
+            return RedirectToAction("GoodsTransfer");
         }
 
 
@@ -208,7 +288,7 @@ namespace FxUserCenter.Controllers
                 IHouseBuyJob house = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseBuyJob>();
                 house.End(id);
             }
-            return View("HouseBuy");
+            return RedirectToAction("HouseBuy");
         }
 
 
@@ -221,9 +301,9 @@ namespace FxUserCenter.Controllers
                 IHouseTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseTransferJob>();
                 car.End(id);
             }
-            return View("HouseTransfer");
+            return RedirectToAction("HouseTransfer");
         }
-        
+
 
         public ActionResult CarBuyDelete(int id)
         {
@@ -234,7 +314,7 @@ namespace FxUserCenter.Controllers
                 ICarBuyJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarBuyJob>();
                 car.Delete(id);
             }
-            return View("CarBuy");
+            return RedirectToAction("CarBuy");
 
         }
 
@@ -248,7 +328,7 @@ namespace FxUserCenter.Controllers
                 ICarTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarTransferJob>();
                 car.Delete(id);
             }
-            return View("CarTransfer");
+            return RedirectToAction("CarTransfer");
         }
 
 
@@ -262,7 +342,7 @@ namespace FxUserCenter.Controllers
                 IGoodsBuyJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsBuyJob>();
                 goods.Delete(id);
             }
-            return View("GoodsBuy");
+            return RedirectToAction("GoodsBuy");
         }
 
 
@@ -275,7 +355,7 @@ namespace FxUserCenter.Controllers
                 IGoodsTransferJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsTransferJob>();
                 goods.Delete(id);
             }
-            return View("GoodsTransfer");
+            return RedirectToAction("GoodsTransfer");
         }
 
 
@@ -289,7 +369,7 @@ namespace FxUserCenter.Controllers
                 IHouseBuyJob house = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseBuyJob>();
                 house.Delete(id);
             }
-            return View("HouseBuy");
+            return RedirectToAction("HouseBuy");
         }
 
 
@@ -302,7 +382,7 @@ namespace FxUserCenter.Controllers
                 IHouseTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseTransferJob>();
                 car.Delete(id);
             }
-            return View("HouseTransfer");
+            return RedirectToAction("HouseTransfer");
         }
     }
 }
