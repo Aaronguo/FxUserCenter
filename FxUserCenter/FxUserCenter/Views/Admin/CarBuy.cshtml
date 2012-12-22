@@ -50,18 +50,16 @@
                                 </span>
                             </td>
                             <td class="center">
-                                <a class="btn btn-success" href="#">
+                                <a class="btn btn-success" href="@FxUserCenter.AppSettings.CarBuyLink(item.CarBuyInfoId)">
                                     <i class="icon-zoom-in icon-white"></i>
                                     查看                                            
                                 </a>
-                                
-                                 <a class="btn btn-info" href="/Admin/CarBuyTopShow?page=@item.CarBuyInfoId"  target="_blank">
+
+                                <a class="btn btn-info" href="/Admin/CarBuyTopShow?page=@item.CarBuyInfoId"  target="_blank">
                                     <i class="icon-edit icon-white"></i>
                                     置顶                                            
                                 </a>
-
-
-                                <a class="btn btn-danger" href="#">
+                                <a class="btn btn-danger" href="/Admin/CarBuyDelete?id=@item.CarBuyInfoId">
                                     <i class="icon-trash icon-white"></i>
                                     删除
                                 </a>

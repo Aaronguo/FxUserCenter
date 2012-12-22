@@ -69,7 +69,7 @@ namespace FxUserCenter.Controllers
 #if DEBUG
             var list = favorite.GetFavorite("117822597@163.com");
 #else
-            var list = privateMessage.GetByUser(User.Identity.Name);
+            var list = favorite.GetFavorite(User.Identity.Name);
 #endif
             return View(list);
         }
@@ -115,67 +115,7 @@ namespace FxUserCenter.Controllers
 
 
 
-        #region 帖子信息获取
-        public ActionResult GoodsBuy()
-        {
-#if DEBUG
-            return View(goodsUserCenter.GetBuys(User.Identity.Name));
-#else
-            return View(goodsUserCenter.GetBuys(User.Identity.Name));
-#endif
-        }
-
-
-        public ActionResult GoodsTransfer()
-        {
-#if DEBUG
-            return View(goodsUserCenter.GetTransfers("117822597@163.com"));
-#else
-             return View(goodsUserCenter.GetTransfers(User.Identity.Name));
-#endif
-        }
-
-
-        public ActionResult CarBuy()
-        {
-#if DEBUG
-            return View(carUserCenter.GetBuys("117822597@163.com"));
-#else
-             return View(carUserCenter.GetBuys(User.Identity.Name));
-#endif
-        }
-
-
-        public ActionResult CarTransfer()
-        {
-#if DEBUG
-            return View(carUserCenter.GetTransfers("117822597@163.com"));
-#else
-             return View(carUserCenter.GetTransfers(User.Identity.Name));
-#endif
-        }
-
-
-        public ActionResult HouseBuy()
-        {
-#if DEBUG
-            return View(houseUserCenter.GetBuys("117822597@163.com"));
-#else
-         return View(houseUserCenter.GetBuys(User.Identity.Name));     
-#endif
-        }
-
-
-
-        public ActionResult HouseTransfer()
-        {
-#if DEBUG
-            return View(houseUserCenter.GetTransfers("117822597@163.com"));
-#else
-            return View(houseUserCenter.GetTransfers(User.Identity.Name));
-#endif
-        }
-        #endregion
+       
 
         public ActionResult ChangePassword()
         {
@@ -222,8 +162,69 @@ namespace FxUserCenter.Controllers
             return Redirect("http://yingtao.co.uk/Account/LoginOff");
         }
 
+        #region 帖子信息获取
+        public ActionResult GoodsBuy()
+        {
+#if DEBUG
+            return View(goodsUserCenter.GetBuys(User.Identity.Name));
+#else
+            return View(goodsUserCenter.GetBuys(User.Identity.Name));
+#endif
+        }
 
 
+        public ActionResult GoodsTransfer()
+        {
+#if DEBUG
+            return View(goodsUserCenter.GetTransfers("117822597@163.com"));
+#else
+            return View(goodsUserCenter.GetTransfers(User.Identity.Name));
+#endif
+        }
+
+
+        public ActionResult CarBuy()
+        {
+#if DEBUG
+            return View(carUserCenter.GetBuys("117822597@163.com"));
+#else
+            return View(carUserCenter.GetBuys(User.Identity.Name));
+#endif
+        }
+
+
+        public ActionResult CarTransfer()
+        {
+#if DEBUG
+            return View(carUserCenter.GetTransfers("117822597@163.com"));
+#else
+            return View(carUserCenter.GetTransfers(User.Identity.Name));
+#endif
+        }
+
+
+        public ActionResult HouseBuy()
+        {
+#if DEBUG
+            return View(houseUserCenter.GetBuys("117822597@163.com"));
+#else
+            return View(houseUserCenter.GetBuys(User.Identity.Name));
+#endif
+        }
+
+
+
+        public ActionResult HouseTransfer()
+        {
+#if DEBUG
+            return View(houseUserCenter.GetTransfers("117822597@163.com"));
+#else
+            return View(houseUserCenter.GetTransfers(User.Identity.Name));
+#endif
+        }
+        #endregion
+
+        #region 帖子成交
         public ActionResult CarBuyEnd(int id)
         {
             IBuyCar buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyCar>();
@@ -302,9 +303,11 @@ namespace FxUserCenter.Controllers
                 car.End(id);
             }
             return RedirectToAction("HouseTransfer");
-        }
+        } 
+        #endregion
 
 
+        #region 帖子删除
         public ActionResult CarBuyDelete(int id)
         {
             IBuyCar buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyCar>();
@@ -383,6 +386,7 @@ namespace FxUserCenter.Controllers
                 car.Delete(id);
             }
             return RedirectToAction("HouseTransfer");
-        }
+        } 
+        #endregion
     }
 }

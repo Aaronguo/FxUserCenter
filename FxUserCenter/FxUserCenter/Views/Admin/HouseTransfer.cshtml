@@ -49,17 +49,17 @@
                                 </span>
                             </td>
                             <td class="center">
-                                <a class="btn btn-success" href="#">
+                                <a class="btn btn-success" href="@FxUserCenter.AppSettings.HouseTransferLink(item.HouseTransferInfoId)">
                                     <i class="icon-zoom-in icon-white"></i>
                                     查看                                            
                                 </a>
-                               
-                                 <a class="btn btn-info" href="/Admin/HouseTransferTopShow?page=@item.HouseTransferInfoId"  target="_blank">
+
+                                <a class="btn btn-info" href="/Admin/HouseTransferTopShow?page=@item.HouseTransferInfoId"  target="_blank">
                                     <i class="icon-edit icon-white"></i>
                                     置顶                                            
                                 </a>
 
-                                <a class="btn btn-danger" href="#">
+                                <a class="btn btn-danger" href="/Admin/HouseTransferDelete?id=@item.HouseTransferInfoId">
                                     <i class="icon-trash icon-white"></i>
                                     删除
                                 </a>

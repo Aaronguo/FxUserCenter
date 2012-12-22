@@ -66,6 +66,10 @@ namespace FxUserCenter.App_Start
             container.Register<Fx.Domain.FxGoods.Search.GoodsTransferSearchService>();
             container.Register<Fx.Domain.FxHouse.Search.HouseBuySearchService>();
             container.Register<Fx.Domain.FxHouse.Search.HouseTransferSearchService>();
+
+            container.Register<Fx.Domain.FxCar.IService.IGlobalCacheCar, Fx.Domain.FxCar.GlobalCacheCar>();
+            container.Register<Fx.Domain.FxGoods.IService.IGlobalCacheGoods, Fx.Domain.FxGoods.GlobalCacheGoods>();
+            container.Register<Fx.Domain.FxHouse.IService.IGolbalCacheHouse, Fx.Domain.FxHouse.GlobalHouseCache>();
         }
 
 

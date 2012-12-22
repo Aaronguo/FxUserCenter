@@ -453,7 +453,87 @@ namespace FxUserCenter.Controllers
 
 
 
+        #region 帖子删除
+        public ActionResult CarBuyDelete(int id)
+        {
+            IBuyCar buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyCar>();
+            var info = buy.Get(id);
+            if (info.PublishUserEmail == User.Identity.Name)
+            {
+                ICarBuyJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarBuyJob>();
+                car.Delete(id);
+            }
+            return RedirectToAction("CarBuy");
 
+        }
+
+
+        public ActionResult CarTransferDelete(int id)
+        {
+            ITransferCar transfer = System.Web.Mvc.DependencyResolver.Current.GetService<ITransferCar>();
+            var info = transfer.Get(id);
+            if (info.PublishUserEmail == User.Identity.Name)
+            {
+                ICarTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarTransferJob>();
+                car.Delete(id);
+            }
+            return RedirectToAction("CarTransfer");
+        }
+
+
+
+        public ActionResult GoodsBuyDelete(int id)
+        {
+            IBuyGoods buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyGoods>();
+            var info = buy.Get(id);
+            if (info.PublishUserEmail == User.Identity.Name)
+            {
+                IGoodsBuyJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsBuyJob>();
+                goods.Delete(id);
+            }
+            return RedirectToAction("GoodsBuy");
+        }
+
+
+        public ActionResult GoodsTransferDelete(int id)
+        {
+            ITransferGoods transfer = System.Web.Mvc.DependencyResolver.Current.GetService<ITransferGoods>();
+            var info = transfer.Get(id);
+            if (info.PublishUserEmail == User.Identity.Name)
+            {
+                IGoodsTransferJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsTransferJob>();
+                goods.Delete(id);
+            }
+            return RedirectToAction("GoodsTransfer");
+        }
+
+
+
+        public ActionResult HouseBuyDelete(int id)
+        {
+            IBuyHouse buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyHouse>();
+            var info = buy.Get(id);
+            if (info.PublishUserEmail == User.Identity.Name)
+            {
+                IHouseBuyJob house = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseBuyJob>();
+                house.Delete(id);
+            }
+            return RedirectToAction("HouseBuy");
+        }
+
+
+        public ActionResult HouseTransferDelete(int id)
+        {
+            ITransferHouse transfer = System.Web.Mvc.DependencyResolver.Current.GetService<ITransferHouse>();
+            var info = transfer.Get(id);
+            if (info.PublishUserEmail == User.Identity.Name)
+            {
+                IHouseTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseTransferJob>();
+                car.Delete(id);
+            }
+            return RedirectToAction("HouseTransfer");
+        }
+        #endregion
 
     }
 }
