@@ -383,7 +383,8 @@ namespace FxUserCenter.Controllers
                     this.topShow.TopShow(new Fx.Entity.FxAggregate.TopShow()
                     {
                         ChannelCatagroy = (int)ChannelCatagroy.FxGoodsBuy,
-                        HeadPicture = goods.Pictures.Where(r => r.BuyPictureCatagroy == (int)PictureCatagroy.Head).First().ImageUrl,
+                        HeadPicture = goods.Pictures.Where(r => r.BuyPictureCatagroy == (int)PictureCatagroy.Head).FirstOrDefault() == null ?
+                        "" : goods.Pictures.Where(r => r.BuyPictureCatagroy == (int)PictureCatagroy.Head).FirstOrDefault().ImageUrl,
                         InfoId = goods.GoodsBuyInfoId,
                         Price = goods.Price,
                         Title = goods.PublishTitle,
@@ -443,7 +444,7 @@ namespace FxUserCenter.Controllers
                     //删除置顶信息
                     topShow.TopShowCancel(new Fx.Entity.FxAggregate.TopShow()
                     {
-                        TopShowId = page.Value
+                        TopShowId = entity.TopShowId
                     });
                     return Content("置顶取消成功");
                 }
@@ -458,7 +459,7 @@ namespace FxUserCenter.Controllers
         {
             IBuyCar buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyCar>();
             var info = buy.Get(id);
-            if (info.PublishUserEmail == User.Identity.Name)
+            if (info != null && info.InfoProcessState != (int)ProcessState.NoDelete)
             {
                 ICarBuyJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarBuyJob>();
                 car.Delete(id);
@@ -472,7 +473,7 @@ namespace FxUserCenter.Controllers
         {
             ITransferCar transfer = System.Web.Mvc.DependencyResolver.Current.GetService<ITransferCar>();
             var info = transfer.Get(id);
-            if (info.PublishUserEmail == User.Identity.Name)
+            if (info != null && info.InfoProcessState != (int)ProcessState.NoDelete)
             {
                 ICarTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<ICarTransferJob>();
                 car.Delete(id);
@@ -486,7 +487,7 @@ namespace FxUserCenter.Controllers
         {
             IBuyGoods buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyGoods>();
             var info = buy.Get(id);
-            if (info.PublishUserEmail == User.Identity.Name)
+            if (info != null && info.InfoProcessState != (int)ProcessState.NoDelete)
             {
                 IGoodsBuyJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsBuyJob>();
                 goods.Delete(id);
@@ -499,7 +500,7 @@ namespace FxUserCenter.Controllers
         {
             ITransferGoods transfer = System.Web.Mvc.DependencyResolver.Current.GetService<ITransferGoods>();
             var info = transfer.Get(id);
-            if (info.PublishUserEmail == User.Identity.Name)
+            if (info != null && info.InfoProcessState != (int)ProcessState.NoDelete)
             {
                 IGoodsTransferJob goods = System.Web.Mvc.DependencyResolver.Current.GetService<IGoodsTransferJob>();
                 goods.Delete(id);
@@ -513,7 +514,7 @@ namespace FxUserCenter.Controllers
         {
             IBuyHouse buy = System.Web.Mvc.DependencyResolver.Current.GetService<IBuyHouse>();
             var info = buy.Get(id);
-            if (info.PublishUserEmail == User.Identity.Name)
+            if (info != null && info.InfoProcessState != (int)ProcessState.NoDelete)
             {
                 IHouseBuyJob house = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseBuyJob>();
                 house.Delete(id);
@@ -526,7 +527,7 @@ namespace FxUserCenter.Controllers
         {
             ITransferHouse transfer = System.Web.Mvc.DependencyResolver.Current.GetService<ITransferHouse>();
             var info = transfer.Get(id);
-            if (info.PublishUserEmail == User.Identity.Name)
+            if (info != null && info.InfoProcessState != (int)ProcessState.NoDelete)
             {
                 IHouseTransferJob car = System.Web.Mvc.DependencyResolver.Current.GetService<IHouseTransferJob>();
                 car.Delete(id);
