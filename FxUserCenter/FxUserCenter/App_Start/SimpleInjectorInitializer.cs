@@ -121,7 +121,7 @@ namespace FxUserCenter.App_Start
         {
             container.Register<Fx.Domain.Account.IService.IAccountService, Fx.Domain.Account.UserAccountService>();
             container.Register<Fx.Domain.FxSite.IService.IChannelService, Fx.Domain.FxSite.ChannelService>();
-            container.Register<Fx.Domain.FxSite.IService.IPageAjax, Fx.Domain.FxSite.PublishAjaxService>();
+            container.Register<Fx.Domain.FxSite.IService.ISite, Fx.Domain.FxSite.SiteService>();
 
             //ForSite
             container.Register<Fx.Domain.FxSite.IService.IGoods, Fx.Domain.FxSite.GoodsService>();
